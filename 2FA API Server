@@ -1,10 +1,10 @@
 ## bash ##
-'''bash
+
 # Install Required Software
 sudo apt update
 sudo apt install python3 python3-pip sqlite3
 pip3 install flask
-'''
+
 # Create the Database
 sqlite3 keys.db
 
@@ -17,7 +17,7 @@ CREATE TABLE keys (
 .exit
 
 ## python ##
-
+````Python
 # Python Application: key_generator.py
 
 from flask import Flask, jsonify
@@ -46,7 +46,7 @@ def get_key():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-
+````
 ## bash ##
 
 # Run the Application
