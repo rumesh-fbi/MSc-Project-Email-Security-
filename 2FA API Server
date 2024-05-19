@@ -1,36 +1,25 @@
-We'll set up a simple application in Ubuntu Server that generates keys, stores them in a database, and allows external servers to retrieve them.
+## bash ##
 
-Install Required Software:
-First, let's install the necessary software. We'll use Python for the application logic, SQLite for the database, and Flask for creating a simple API.
-
-bash
-Copy code
+# Install Required Software
 sudo apt update
 sudo apt install python3 python3-pip sqlite3
 pip3 install flask
-Create the Database:
-We'll create a SQLite database to store the generated keys.
 
-bash
-Copy code
+# Create the Database
 sqlite3 keys.db
-In the SQLite shell, create a table to store the keys:
 
-sql
-Copy code
+# In the SQLite shell, create a table to store the keys:
 CREATE TABLE keys (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     key TEXT NOT NULL,
     expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 .exit
-Write the Python Application:
-Now, let's create a Python script to generate keys and provide an API for retrieving them.
 
-Create a file named key_generator.py:
+## python ##
 
-python
-Copy code
+# Python Application: key_generator.py
+
 from flask import Flask, jsonify
 import sqlite3
 import secrets
@@ -57,34 +46,26 @@ def get_key():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-Run the Application:
-Run the Python script to start the Flask application:
 
-bash
-Copy code
+## bash ##
+
+# Run the Application
 python3 key_generator.py
-Accessing the API:
-Now, you can access the API endpoints from external servers using HTTP requests. For example, to generate a key:
 
-bash
-Copy code
+## bash ##
+
+# Accessing the API
+# Generate a key
 curl http://your-server-ip:5000/generate_key
-To retrieve the latest key:
 
-bash
-Copy code
+# Retrieve the latest key
 curl http://your-server-ip:5000/get_key
-Automate Key Generation:
-To automate key generation, you can set up a cron job that calls the /generate_key endpoint at a specific interval.
 
-Open crontab:
+## bash ##
 
-bash
-Copy code
+# Automate Key Generation
+# Open crontab
 crontab -e
-Add a line to call the API endpoint. For example, to generate a key every day at midnight:
 
-bash
-Copy code
+# Add a line to call the API endpoint. For example, to generate a key every day at midnight:
 0 0 * * * curl -X GET http://your-server-ip:5000/generate_key
-That's it! You've created a simple application in Ubuntu Server that generates keys, stores them in a database, and provides an API for external servers to retrieve them.
